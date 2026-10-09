@@ -1,0 +1,27 @@
+.ai-highlight { position: relative; overflow: hidden; color: var(--primary-foreground); padding: 110px 0;
+  background: linear-gradient(100deg, var(--brand-deep) 48%, oklch(0.37049 0.21812 268.975 / 80%) 70%, oklch(0.37049 0.21812 268.975 / 66%)), url('/media/ai-code-bg.webp') right center / cover, var(--brand-deep); }
+.ai-highlight::before { content: ''; position: absolute; width: 100%; height: 130%; border-radius: 100% 0 0 0; top: 18%; left: 55%; background: var(--brand-bright); opacity: .45; }
+.ai-highlight-grid { position: relative; display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,0.85fr); gap: 80px; align-items: stretch; }
+.ai-highlight h2 { font-size: 44px; font-weight: 700; line-height: 1.2; }
+.ai-highlight-text { margin-top: 20px; font-size: 18px; line-height: 1.7; max-width: 620px; }
+.ai-highlight-capabilities { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 32px 40px; margin: 44px 0 44px; }
+.ai-highlight-capabilities { list-style: none; padding: 0; }
+.ai-highlight-capabilities li { position: relative; padding-left: 24px; }
+.ai-highlight-capabilities li::before { content: ''; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--aqua); }
+.ai-highlight-capabilities h3 { font-size: 20px; font-weight: 600; }
+.ai-highlight-capabilities p { font-size: 16px; line-height: 1.6; margin-top: 8px; opacity: .9; }
+.ai-highlight-collage { position: relative; min-height: 560px; }
+.ai-highlight-collage img { position: absolute; display: block; }
+.ai-collage-cubes, .ai-collage-ml { object-fit: cover; border-radius: 6px; box-shadow: 0 24px 60px -24px oklch(0.15 0.1 268 / 70%); }
+.ai-collage-cubes { left: 0; bottom: 4%; width: 62%; height: 38%; object-position: 62% center; border: 6px solid var(--primary-foreground); }
+.ai-collage-ml { top: 0; right: 0; width: 84%; height: 54%; object-position: center 30%; }
+.ai-collage-head { right: -4%; bottom: 0; height: 70%; width: auto; filter: drop-shadow(0 18px 40px oklch(0.15 0.1 268 / 60%)); -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent); mask-image: linear-gradient(to bottom, #000 78%, transparent); }
+@media (max-width:900px) {
+  .ai-highlight-grid { grid-template-columns: minmax(0,1fr); gap: 48px; }
+  .ai-highlight-collage { min-height: 440px; max-width: 560px; width: 100%; margin: 0 auto; }
+}
+@media (max-width:767px) {
+  .ai-highlight { padding: 65px 0; }
+  .ai-highlight h2 { font-size: 30px; }
+  .ai-highlight-capabilities { grid-template-columns: minmax(0,1fr); gap: 24px; }
+}

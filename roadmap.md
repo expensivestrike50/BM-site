@@ -1,0 +1,20 @@
+# Better Materials video and screen layouts
+- [x] Add generated historic construction and modern engineering videos with playback controls.
+- [x] Keep the design consistent and readable across phone, tablet and large screens.
+- [x] Verify video playback, controls and screen layouts.
+- [x] Adapt homepage and navigation to the uploaded company brief, matching original copy lengths.
+- [x] Apply beige, white, black and blue while preserving typography.
+- [x] Replace media with the uploaded logo, historical construction images and generated modern engineering photographs.
+- [x] Verify imagery, navigation, tabs and layouts.
+- [x] Keep the hero headline on three lines (Better materials. / Smarter material / development.) at every screen width.
+- [x] Make the footer logo solid white with no background box.
+- [x] Replace footage with high-quality historical, modern and intelligent construction videos.
+- [x] Verify all three videos and preserve the three-line headline across screen sizes.
+- [x] Combine the three scenes in the hero video with synchronized explanatory annotations inspired by Reworld.
+- [x] Check scene transitions, labels, playback controls and mobile readability.
+- [x] Replace the hero with a company introduction using all five uploaded clips plus the modern and intelligent scenes.
+- [x] Verify the new introduction, captions and playback.
+- [x] Remove the scene numbers (02/07, 03/07) from the hero video labels.
+- [ ] Recreate Reworld’s industry layout for all six Better Materials industries, matching text character counts.
+- [ ] Add navigation among industry pages without changing the completed homepage.
+- [ ] Verify every industry page, images and navigation on large and small screens.
