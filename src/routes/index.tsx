@@ -18,6 +18,7 @@ import intelligenceVideo from '@/assets/intelligent-construction-hq.mp4.asset.js
 import intelligenceWebm from '@/assets/intelligent-construction-hq.webm.asset.json';
 import { ConstructionVideo } from '@/components/construction-video';
 import { heroConstructionScenes } from '@/lib/construction-scenes';
+import { withBase } from '@/lib/base-path';
 
 export const Route = createFileRoute('/')({
   head: () => ({ meta: [
@@ -70,5 +71,5 @@ function Index() {
       </div>
     </div></section>
     <section className="final-cta" id="contact"><div className="site-container"><h2>Ready to Develop Better Materials?</h2><p>Help shape computational intelligence turning waste into promising, high-performance materials for manufacturing.</p><p>Better feedstocks. Smarter formulations. Targeted experiments. Computational intelligence focused on your manufacturing goals.</p><QuoteLink label="Explore Our Material Intelligence" inverse/></div></section>
-  </main><footer className="site-footer"><div className="site-container"><div className="footer-top"><a href="/" aria-label="Better Materials home"><img src={footerLogo} alt="Better Materials"/></a></div><div className="footer-navigation">{navigation.map(n => <div key={n.name}><a className="footer-title" href={originalUrl(n.path)}>{n.name}</a>{n.links.slice(0,5).map(l => <a key={l.path} href={originalUrl(l.path)}>{l.name}</a>)}</div>)}</div><div className="footer-bottom"><span>© {new Date().getFullYear()} Better Materials. All rights reserved.</span><a href="#about">Our Mission</a><a href="#approach">Our Approach</a><a href="#platform">Platform Overview</a></div></div></footer></>;
+  </main><footer className="site-footer"><div className="site-container"><div className="footer-top"><a href={withBase("/")} aria-label="Better Materials home"><img src={footerLogo} alt="Better Materials"/></a></div><div className="footer-navigation">{navigation.map(n => <div key={n.name}><a className="footer-title" href={originalUrl(n.path)}>{n.name}</a>{n.links.slice(0,5).map(l => <a key={l.path} href={originalUrl(l.path)}>{l.name}</a>)}</div>)}</div><div className="footer-bottom"><span>© {new Date().getFullYear()} Better Materials. All rights reserved.</span><a href="#about">Our Mission</a><a href="#approach">Our Approach</a><a href="#platform">Platform Overview</a></div></div></footer></>;
 }

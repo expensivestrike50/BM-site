@@ -3,6 +3,7 @@ import modernConstructionVideo from '@/assets/modern-construction-hq.mp4.asset.j
 import modernConstructionWebm from '@/assets/modern-construction-hq.webm.asset.json';
 import { stockPhoto } from '@/lib/stock-photos';
 import { feedstockIntelligenceScenes, type ConstructionScene } from '@/lib/construction-scenes';
+import { withBase } from '@/lib/base-path';
 
 
 export type SolutionCard ={ title: string; stat: string; statLabel: string; text: string };
@@ -70,7 +71,7 @@ export const solutionPages: SolutionPageData[] = [
       { eyebrow: 'EVALUATE', title: 'Account for Variability Before Materials Reach the Plant', text: 'We consider material variability alongside your manufacturing equipment so recommendations stay practical for your operations.', bullets: ['Material variability tracked across batches and sources', 'Equipment constraints built into every recommendation', 'Feedstock performance compared under real conditions'], cta: 'Explore Equipment-Aware Options', image: stockPhoto('cementPlant') },
       { eyebrow: 'VALIDATE', title: 'Prioritize Experiments That Prove Manufacturing Value', text: 'Our computational recommendations point to the most promising formulations, and physical experiments confirm them before scale-up.', bullets: ['Computational shortlist of the most promising formulations', 'Targeted experiments prioritized for manufacturing validation', 'Results shared in a format your team can act on'], cta: 'Explore Validation Options', image: stockPhoto('testingLab') },
     ],
-    band: { eyebrow: 'WHY FEEDSTOCK INTELLIGENCE MATTERS', image: stockPhoto('stackedBlocks', 2000), video: { src: '/media/feedstock-intelligence.mp4', webm: '/media/feedstock-intelligence.webm', poster: '/media/feedstock-intelligence.jpg', label: 'Why feedstock intelligence matters', scenes: feedstockIntelligenceScenes }, line: 'Better feedstocks. Smarter formulations. Better materials ahead.', cta: 'Start Your Feedstock Review' },
+    band: { eyebrow: 'WHY FEEDSTOCK INTELLIGENCE MATTERS', image: stockPhoto('stackedBlocks', 2000), video: { src: withBase('/media/feedstock-intelligence.mp4'), webm: withBase('/media/feedstock-intelligence.webm'), poster: withBase('/media/feedstock-intelligence.jpg'), label: 'Why feedstock intelligence matters', scenes: feedstockIntelligenceScenes }, line: 'Better feedstocks. Smarter formulations. Better materials ahead.', cta: 'Start Your Feedstock Review' },
     bento: {
       title: 'Your Waste. Our Intelligence. Better Materials.',
       text: 'Every feedstock you explore and every formulation we recommend starts with your manufacturing.',

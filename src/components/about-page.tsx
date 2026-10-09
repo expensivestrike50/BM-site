@@ -6,6 +6,7 @@ import { IndustryFooter } from '@/components/industry-footer';
 import { aboutPages, type AboutLink, type AboutPageData, type AboutRow } from '@/lib/about-data';
 import { mediaPosts } from '@/lib/media-data';
 import './about-page.css';
+import { withBase } from '@/lib/base-path';
 
 const statIcons = { recycle: Recycle, layers: Layers, factory: Factory, target: Target, globe: Globe2, building: Building2 };
 
@@ -56,14 +57,14 @@ export function AboutPage({ page }: { page: AboutPageData }) {
 
     <section className="about-more"><div className="site-container">
       <h2>More from Better Materials</h2>
-      <div className="about-more-grid">{mediaPosts.slice(0, 3).map(post => <CaseStudyViewer key={post.slug} post={post}>{open => <a href={post.href ?? '/#case-studies'} onClick={open} className="about-more-card">
+      <div className="about-more-grid">{mediaPosts.slice(0, 3).map(post => <CaseStudyViewer key={post.slug} post={post}>{open => <a href={post.href ?? withBase('/#case-studies')} onClick={open} className="about-more-card">
         <span className="about-more-tag">{post.category}</span><h3>{post.title}</h3><p>{post.date}</p>
       </a>}</CaseStudyViewer>)}</div>
     </div></section>
 
     <nav className="site-container about-related" aria-label="About pages">
-      <a href="/about-us" aria-current={page.slug === '' ? 'page' : undefined}>About Us</a>
-      {aboutPages.map(item => <a key={item.slug} href={`/about-us/${item.slug}`} aria-current={item.slug === page.slug ? 'page' : undefined}>{item.name}</a>)}
+      <a href={withBase("/about-us")} aria-current={page.slug === '' ? 'page' : undefined}>About Us</a>
+      {aboutPages.map(item => <a key={item.slug} href={withBase(`/about-us/${item.slug}`)} aria-current={item.slug === page.slug ? 'page' : undefined}>{item.name}</a>)}
     </nav>
   </main><IndustryFooter/></>;
 }

@@ -7,6 +7,8 @@
     "dev": "vite dev",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "build:pages": "PAGES_BASE=${PAGES_BASE:-/BM-site/} vite build && PAGES_BASE=${PAGES_BASE:-/BM-site/} node scripts/pages-postbuild.mjs",
+    "deploy:pages": "npm run build:pages && node scripts/pages-deploy.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",

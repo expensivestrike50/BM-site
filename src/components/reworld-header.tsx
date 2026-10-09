@@ -4,6 +4,7 @@ import { Search, X, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import logo from '@/assets/better-materials-logo.png.asset.json';
 import { navigation, originalUrl } from '@/lib/reworld-data';
+import { withBase } from '@/lib/base-path';
 
 export function ReworldHeader({ industryPage = false }: { industryPage?: boolean }) {
   const [open, setOpen] = useState<string | null>(null);
@@ -11,13 +12,13 @@ export function ReworldHeader({ industryPage = false }: { industryPage?: boolean
   const [query, setQuery] = useState('');
   const [mobile, setMobile] = useState(false);
   const active = navigation.find(n => n.name === open);
-  const destination = (path: string) => industryPage && path.startsWith('#') ? `/${path}` : originalUrl(path);
+  const destination = (path: string) => industryPage && path.startsWith('#') ? withBase(`/${path}`) : originalUrl(path);
   const menuLink = (path: string, name: string, close: () => void) => industryPage && path.startsWith('#industry-')
     ? <Link key={path} to="/who-we-help/$industry" params={{ industry: path.replace('#industry-', '') }} onClick={close}>{name}</Link>
     : <a key={path} href={destination(path)} onClick={close}>{name}</a>;
   return <header className="site-header" onMouseLeave={() => setOpen(null)}>
     <div className="site-container main-navigation">
-      <a href="/" aria-label="Better Materials home"><img className="brand-logo" src={logo.url} alt="Better Materials" /></a>
+      <a href={withBase("/")} aria-label="Better Materials home"><img className="brand-logo" src={logo.url} alt="Better Materials" /></a>
       <nav aria-label="Main navigation" className={mobile ? 'main-nav is-mobile-open' : 'main-nav'}>
         {navigation.map(item => item.links.length ? <Button key={item.name} variant="navigation" aria-expanded={open === item.name} onMouseEnter={() => setOpen(item.name)} onClick={() => setOpen(open === item.name ? null : item.name)}>{item.name}</Button> : <a key={item.name} href={destination(item.path)} onMouseEnter={() => setOpen(null)}>{item.name}</a>)}
         <Button variant="brand" asChild><a href={destination('#platform')}>Explore the Platform</a></Button>

@@ -4,8 +4,9 @@ import precast from '@/assets/modern-precast.jpg';
 import lab from '@/assets/modern-materials-lab.jpg';
 import recycling from '@/assets/modern-recycling.jpg';
 import byproducts from '@/assets/modern-byproducts.jpg';
+import { withBase } from '@/lib/base-path';
 
-export const originalUrl = (path: string) => path;
+export const originalUrl = (path: string) => withBase(path);
 export const solutions = [
   { name: 'Feedstocks', subtitle: 'Material Intelligence', image: recycling, path: '#platform', description: 'A computational approach for exploring waste-derived materials within manufacturing constraints across concrete, masonry, and industrial byproduct streams. Our platform identifies promising pathways using characteristics and performance requirements.', bullets: ['Waste streams characterized against available feedstocks and target product requirements', 'Material variability considered alongside manufacturing equipment constraints', 'Computational recommendations to identify the most promising formulations', 'Physical experiments prioritized for practical manufacturing validation'], cta: 'Explore Feedstock Intelligence Solutions' },
   { name: 'Formulations', subtitle: 'Waste-to-Value Development', image: precast, path: '#platform', description: 'Your feedstocks inform promising formulations, processing conditions, and performance predictions. Unnecessary experimentation reduced. Recommendations guide validation.', bullets: ['Formulation models identifying promising material combinations', 'Recommendations for targeted experiments', 'Supports lower-carbon materials'], cta: 'Explore Waste-to-Value Formulation Solutions', stat: 'R&D', statLabel: 'Intelligence for material development' },
