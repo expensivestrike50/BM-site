@@ -1,26 +1,10 @@
-import { createFileRoute, notFound } from '@tanstack/react-router';
-import { AboutPage } from '@/components/about-page';
-import { getAboutPage } from '@/lib/about-data';
+import { createFileRoute, notFound, redirect } from '@tanstack/react-router';
+import { mergedAboutSlugs } from '@/lib/about-data';
 
+// The old About sub-pages are now sections of /about-us.
 export const Route = createFileRoute('/about-us/$page')({
   loader: ({ params }) => {
-    const page = getAboutPage(params.page);
-    if (!page) throw notFound();
-    return page;
+    if (mergedAboutSlugs.includes(params.page)) throw redirect({ to: '/about-us', hash: params.page, statusCode: 301 });
+    throw notFound();
   },
-  head: ({ loaderData: page }) => {
-    if (!page) return { meta: [{ title: 'Page Not Found | Better Materials' }, { name: 'robots', content: 'noindex' }] };
-    const title = `${page.name} | Better Materials`;
-    return { meta: [
-      { title }, { name: 'description', content: page.description },
-      { property: 'og:title', content: title }, { property: 'og:description', content: page.description },
-      { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' },
-    ] };
-  },
-  component: AboutRoute,
 });
-
-function AboutRoute() {
-  const page = Route.useLoaderData();
-  return <AboutPage key={page.slug} page={page}/>;
-}

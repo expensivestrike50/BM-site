@@ -15,6 +15,6 @@ export function IndustryFooter() {
         ? <Link key={link.path} to="/who-we-help/$industry" params={{ industry: link.path.split('/').pop() ?? '' }}>{link.name}</Link>
         : <a key={link.path} href={footerHref(link.path)}>{link.name}</a>)}
     </div>)}</div>
-    <div className="footer-bottom"><span>© {new Date().getFullYear()} Better Materials. All rights reserved.</span><a href={withBase("/#about")}>Our Mission</a><a href={withBase("/#approach")}>Our Approach</a><a href={withBase("/#platform")}>Platform Overview</a></div>
+    <div className="footer-bottom"><span>© {new Date().getFullYear()} Better Materials. All rights reserved.</span><a href={withBase("/about-us#our-mission")}>Our Mission</a><a href={withBase("/about-us#become-a-design-partner")}>Become a Partner</a><a href={withBase("/#approach")}>Our Approach</a><a href={withBase("/#platform")}>Platform Overview</a></div>
   </div></footer>;
 }

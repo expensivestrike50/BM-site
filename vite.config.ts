@@ -7,8 +7,9 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 // GitHub Pages build (`npm run build:pages`): a fully static, prerendered site
-// served from a sub-path (https://<user>.github.io/BM-site/). Every other build,
-// including Lovable's, is unchanged.
+// served at https://thebettermaterials.com/ (PAGES_BASE=/). Set PAGES_BASE to a
+// sub-path such as /BM-site/ to serve from <user>.github.io instead. Every other
+// build, including Lovable's, is unchanged.
 const pagesBase = process.env["PAGES_BASE"];
 
 // Site media is referenced through `*.asset.json` pointers to Lovable's asset

@@ -27,5 +27,5 @@ export const navigation = [
   { name: 'Who We Serve', path: '#industries', heading: 'Manufacturers', links: industries.map(i => ({name:i.name,path:'/who-we-help/'+i.slug})) },
   { name: 'Our Approach', path: '#approach', heading: 'Our Approach', links: [{name:'Computational Intelligence',path:'#approach'}, {name:'Material Development',path:'#platform'}, {name:'Circular Manufacturing',path:'#impact'}, {name:'Performance & Validation',path:'#platform-validation'}] },
   { name: 'Why It Matters', path: '#impact', heading: '', links: [] },
-  { name: 'About Us', path: '/about-us', heading: 'About Better Materials', links: [{name:'Our Mission',path:'/about-us/our-mission'}, {name:'Industry Opportunity',path:'/about-us/industry-opportunity'}, {name:'Become a Design Partner',path:'/about-us/become-a-design-partner'}] },
+  { name: 'About Us', path: '/about-us', heading: 'About Better Materials', links: [{name:'Our Mission',path:'/about-us#our-mission'}, {name:'Industry Opportunity',path:'/about-us#industry-opportunity'}, {name:'Become a Design Partner',path:'/about-us#become-a-design-partner'}] },
 ];

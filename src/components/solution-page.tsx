@@ -111,7 +111,7 @@ export function SolutionPage({ page }: { page: SolutionPageData }) {
           {page.bento.video
             ? <ConstructionVideo src={page.bento.video.src} webm={page.bento.video.webm} poster={page.bento.image} label={page.bento.feature}/>
             : <img src={page.bento.image} alt={page.bento.feature} loading="lazy"/>}
-          <div className="solution-bento-feature-copy"><h3>{page.bento.feature}</h3><Button variant="inverseOutline" asChild><Link to="/" hash="about">Our Mission</Link></Button></div>
+          <div className="solution-bento-feature-copy"><h3>{page.bento.feature}</h3><Button variant="inverseOutline" asChild><Link to="/about-us" hash="our-mission">Our Mission</Link></Button></div>
         </div>
         {page.bento.tiles.map((tile, index) => { const Pattern = tilePatterns[index]; return <article className={`solution-tile solution-tile--${index}`} key={tile.label}>
           <h3>{tile.value}</h3><h4>{tile.label}</h4><p>{tile.text}</p>
