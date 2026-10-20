@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as AboutUsIndexRouteImport } from './routes/about-us.index'
 import { Route as AboutUsPageRouteImport } from './routes/about-us.$page'
 import { Route as WhatWeDoSolutionRouteImport } from './routes/what-we-do.$solution'
@@ -18,6 +19,11 @@ import { Route as WhoWeHelpIndustryRouteImport } from './routes/who-we-help.$ind
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlatformRoute = PlatformRouteImport.update({
+  id: '/platform',
+  path: '/platform',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutUsIndexRoute = AboutUsIndexRouteImport.update({
@@ -43,6 +49,7 @@ const WhoWeHelpIndustryRoute = WhoWeHelpIndustryRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/platform': typeof PlatformRoute
   '/about-us/$page': typeof AboutUsPageRoute
   '/what-we-do/$solution': typeof WhatWeDoSolutionRoute
   '/who-we-help/$industry': typeof WhoWeHelpIndustryRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/platform': typeof PlatformRoute
   '/about-us/$page': typeof AboutUsPageRoute
   '/what-we-do/$solution': typeof WhatWeDoSolutionRoute
   '/who-we-help/$industry': typeof WhoWeHelpIndustryRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/platform': typeof PlatformRoute
   '/about-us/$page': typeof AboutUsPageRoute
   '/what-we-do/$solution': typeof WhatWeDoSolutionRoute
   '/who-we-help/$industry': typeof WhoWeHelpIndustryRoute
@@ -67,6 +76,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/platform'
     | '/about-us/$page'
     | '/what-we-do/$solution'
     | '/who-we-help/$industry'
@@ -74,6 +84,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/platform'
     | '/about-us/$page'
     | '/what-we-do/$solution'
     | '/who-we-help/$industry'
@@ -81,6 +92,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/platform'
     | '/about-us/$page'
     | '/what-we-do/$solution'
     | '/who-we-help/$industry'
@@ -89,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PlatformRoute: typeof PlatformRoute
   AboutUsPageRoute: typeof AboutUsPageRoute
   WhatWeDoSolutionRoute: typeof WhatWeDoSolutionRoute
   WhoWeHelpIndustryRoute: typeof WhoWeHelpIndustryRoute
@@ -102,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/platform': {
+      id: '/platform'
+      path: '/platform'
+      fullPath: '/platform'
+      preLoaderRoute: typeof PlatformRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about-us/': {
@@ -137,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PlatformRoute: PlatformRoute,
   AboutUsPageRoute: AboutUsPageRoute,
   WhatWeDoSolutionRoute: WhatWeDoSolutionRoute,
   WhoWeHelpIndustryRoute: WhoWeHelpIndustryRoute,

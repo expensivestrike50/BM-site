@@ -21,7 +21,7 @@ export function ReworldHeader({ industryPage = false }: { industryPage?: boolean
       <a href={withBase("/")} aria-label="Better Materials home"><img className="brand-logo" src={logo.url} alt="Better Materials" /></a>
       <nav aria-label="Main navigation" className={mobile ? 'main-nav is-mobile-open' : 'main-nav'}>
         {navigation.map(item => item.links.length ? <Button key={item.name} variant="navigation" aria-expanded={open === item.name} onMouseEnter={() => setOpen(item.name)} onClick={() => setOpen(open === item.name ? null : item.name)}>{item.name}</Button> : <a key={item.name} href={destination(item.path)} onMouseEnter={() => setOpen(null)}>{item.name}</a>)}
-        <Button variant="brand" asChild><a href={destination('#platform')}>Explore the Platform</a></Button>
+        <Button variant="brand" asChild><a href={withBase('/platform')}>Explore the Platform</a></Button>
       </nav>
       <Button variant="navigation" className="mobile-toggle" aria-label={mobile ? 'Close menu' : 'Open menu'} onClick={() => setMobile(!mobile)}>{mobile ? <X /> : <Menu />}</Button>
     </div>

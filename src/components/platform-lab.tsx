@@ -6,6 +6,7 @@ import './platform-lab.css';
 
 const stageIcons = { targets: Target, mix: Boxes, experiments: FlaskConical, results: Gauge } as const;
 const pct = (v: number) => `${Math.round(v * 100)}%`;
+const STREAM_IDS: Record<IngredientId, string> = { cement: 'S1', scm: 'S2', sand: 'S3', coarse: 'S4', rca: 'S5', water: 'S6', admixture: 'S7' };
 const kg = (v: number) => (v < 20 ? v.toFixed(1) : Math.round(v).toLocaleString());
 const change = (now: number, base: number) => { const d = (now - base) / base; return `${d <= 0 ? '−' : '+'}${Math.abs(Math.round(d * 100))}%`; };
 
@@ -69,18 +70,15 @@ export function PlatformLab() {
   };
 
   return <div className="platform-lab" id="platform-lab">
-    <div className="pl-intro">
-      <div><p className="eyebrow">Interactive platform</p><h3>From target properties to the experiments worth running</h3></div>
-      <p>Set the product you want to make. The platform predicts a mix design from your feedstock, picks the smallest set of trial batches that will confirm it, and predicts how each one will perform.</p>
-    </div>
     <div className={`pl-frame${failed ? ' is-fallback' : ''}`} ref={frame}>
       <div className="pl-canvas" ref={canvasHost} role="img" aria-label={`3D view of the ${stages[stageIndex]?.name.toLowerCase()} stage. ${summaries[stage]}.`}/>
       <div className="pl-labels" ref={labelHost}/>
       {failed && <p className="pl-fallback">The 3D view needs WebGL, which this browser has turned off. Every prediction is still available in the panel.</p>}
       {!failed && <div className="pl-view-controls">
-        <button type="button" className={overview ? 'is-on' : ''} aria-pressed={overview} onClick={() => setOverview(o => !o)}><Maximize2 size={15}/>Overview</button>
+        <Flowsheet stage={stage} overview={overview} onStage={go}/>
+        <button type="button" className={overview ? 'is-on' : ''} aria-pressed={overview} onClick={() => setOverview(o => !o)}><Maximize2 size={15}/>Plant overview</button>
       </div>}
-      {!failed && <p className="pl-hint" aria-hidden="true">Drag to orbit · click silos, trials and stages</p>}
+      {!failed && <p className="pl-hint" aria-hidden="true">Drag to orbit · scroll to zoom · click equipment, trials and plant areas</p>}
 
       <nav className="pl-pipeline" aria-label="Platform stages">
         {stages.map((s, i) => { const Icon = stageIcons[s.id]; return <button type="button" key={s.id} className={`pl-step${s.id === stage && !overview ? ' is-on' : ''}${i < stageIndex ? ' is-done' : ''}`} aria-current={s.id === stage ? 'step' : undefined} onClick={() => go(s.id)}>
@@ -101,11 +99,45 @@ export function PlatformLab() {
           {stageIndex > 0 ? <button type="button" className="pl-ghost" onClick={() => go(stages[stageIndex - 1]!.id)}><ArrowLeft size={15}/>Back</button> : <span/>}
           {next ? <button type="button" className="pl-primary" onClick={() => go(next.id)}>{next.id === 'mix' ? 'Predict mix design' : next.id === 'experiments' ? 'Design experiments' : 'Predict properties'}<ArrowRight size={15}/></button>
             : <button type="button" className="pl-primary" onClick={() => go('targets')}>Adjust targets<ArrowLeft size={15}/></button>}
+          <p className="pl-fine">Illustrative model built on published concrete relationships. Real recommendations are calibrated to your feedstock and plant data.</p>
         </footer>
       </aside>
     </div>
-    <p className="pl-note">Illustrative model built on published concrete relationships. Real recommendations are calibrated to your feedstock characterization and plant data.</p>
   </div>;
+}
+
+// Process-flow minimap in the style of a flowsheet: unit-operation blocks joined by numbered streams.
+const FLOW_BLOCKS: { id: string; name: string; stage: StageId; x: number; y: number; w: number; h: number }[] = [
+  { id: 'SILO-101', name: 'Cement', stage: 'mix', x: 6, y: 6, w: 62, h: 17 },
+  { id: 'SILO-102', name: 'Binder', stage: 'mix', x: 6, y: 27, w: 62, h: 17 },
+  { id: 'BIN-201', name: 'Aggregates', stage: 'mix', x: 6, y: 48, w: 62, h: 17 },
+  { id: 'TK-301', name: 'Water', stage: 'mix', x: 6, y: 69, w: 62, h: 17 },
+  { id: 'TK-302', name: 'Admixture', stage: 'mix', x: 6, y: 90, w: 62, h: 17 },
+  { id: 'MIX-401', name: 'Mixer', stage: 'mix', x: 100, y: 40, w: 56, h: 32 },
+  { id: 'FORM-501', name: 'Forming', stage: 'targets', x: 188, y: 14, w: 60, h: 26 },
+  { id: 'LAB-601', name: 'Trial lab', stage: 'experiments', x: 188, y: 76, w: 60, h: 26 },
+  { id: 'CURE-701', name: 'Curing', stage: 'results', x: 276, y: 14, w: 60, h: 26 },
+  { id: 'QC-801', name: 'Testing', stage: 'results', x: 276, y: 76, w: 60, h: 26 },
+];
+const FLOW_STREAMS: { id: string; d: string; lx: number; ly: number }[] = [
+  ...[0, 1, 2, 3, 4].map(i => { const y = 14.5 + i * 21, yy = 46 + i * 5; return { id: `S${i === 2 ? '3–5' : i < 2 ? i + 1 : i + 3}`, d: `M68 ${y}H84V${yy}H100`, lx: 76, ly: y - 2 }; }),
+  { id: 'S8', d: 'M156 50H172V27H188', lx: 164, ly: 24 },
+  { id: 'S11', d: 'M156 62H172V89H188', lx: 164, ly: 100 },
+  { id: 'S9', d: 'M248 27H276', lx: 262, ly: 24 },
+  { id: 'S12', d: 'M248 89H276', lx: 262, ly: 86 },
+  { id: 'S10', d: 'M306 40V76', lx: 312, ly: 61 },
+];
+
+function Flowsheet({ stage, overview, onStage }: { stage: StageId; overview: boolean; onStage: (id: StageId) => void }) {
+  return <svg className="pl-flowsheet" viewBox="0 0 342 112" aria-hidden="true">
+    <defs><marker id="pl-arrow" viewBox="0 0 6 6" refX="5.5" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L6 3L0 6Z"/></marker></defs>
+    {FLOW_STREAMS.map(s => <g key={s.id} className="pl-fs-stream"><path d={s.d} markerEnd="url(#pl-arrow)"/><text x={s.lx} y={s.ly} textAnchor="middle">{s.id}</text></g>)}
+    {FLOW_BLOCKS.map(b => <g key={b.id} className={`pl-fs-block${!overview && b.stage === stage ? ' is-on' : ''}`} onClick={() => onStage(b.stage)}>
+      <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="2"/>
+      <text x={b.x + b.w / 2} y={b.y + b.h / 2 - (b.h > 20 ? 3 : 1)} textAnchor="middle" className="pl-fs-id">{b.id}</text>
+      <text x={b.x + b.w / 2} y={b.y + b.h / 2 + (b.h > 20 ? 8 : 6)} textAnchor="middle">{b.name}</text>
+    </g>)}
+  </svg>;
 }
 
 function Range({ label, value, unit, min, max, step, onChange, format }: { label: string; value: number; unit: string; min: number; max: number; step: number; onChange: (v: number) => void; format?: (v: number) => string }) {
@@ -147,9 +179,10 @@ function MixPanel({ targets, rec, ingredient, onIngredient }: { targets: Targets
       <div><b>{pct(b.design.scm)}</b><span>cement replaced</span></div>
       <div><b>{pct(b.design.rca)}</b><span>recycled coarse</span></div>
     </div>
-    <ul className="pl-ingredients" aria-label="Mix proportions per cubic metre">
+    <p className="pl-table-head"><span>Stream</span><span>kg/m³</span></p>
+    <ul className="pl-ingredients" aria-label="Mix proportions per cubic metre, by feed stream">
       {b.ingredients.map(i => <li key={i.id}><button type="button" aria-pressed={ingredient === i.id} onClick={() => onIngredient(i.id)}>
-        <i style={{ background: i.color }}/><span>{i.name}</span><b>{i.kg < 0.05 ? '—' : `${kg(i.kg)} kg`}</b>
+        <i style={{ background: i.color }}/><span><small>{STREAM_IDS[i.id]}</small>{i.name}</span><b>{i.kg < 0.05 ? '—' : `${kg(i.kg)} kg`}</b>
         <em><u style={{ width: `${Math.max(i.kg > 0.05 ? 2 : 0, (i.kg / max) * 100)}%`, background: i.color }}/></em>
       </button></li>)}
     </ul>
